@@ -15,7 +15,15 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-
+from products.views import (
+    home_view,
+    product_detail_view,
+    product_api_detail_view,
+)
 urlpatterns = [
     path('admin/', admin.site.urls),
+    # own
+    path("search/", home_view),
+    path("products/<int:pk>/", product_detail_view),  # dynamic url
+    path("api/products/<int:pk>/", product_api_detail_view),  # dynamic url
 ]

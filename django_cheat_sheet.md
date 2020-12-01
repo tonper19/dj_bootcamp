@@ -164,3 +164,59 @@ Type "help", "copyright", "credits" or "license" for more information.
 >>> obj.content = "this is the content for the database field content"
 >>> obj.save()
 ```
+
+## Day Two
+
+### Working with views
+
+#### Simple view
+
+Modify the products/view.py
+
+```python
+from django.shortcuts import render
+from django.http import HttpResponse, JsonResponse
+from .models import Product
+# Create your views here.
+
+
+def home_view(request, *args, **kwargs):
+    return HttpResponse("<h1>Hello World</h1>")
+
+
+def product_detail_view(request, pk):
+    try:
+        obj = Product.objects.get(pk=pk)
+    except Product.DoesNotExist:
+        raise Http404
+    return HttpResponse(f"<h1>Product: {obj.id}</h1><p>title: {obj.title}</p><p>content: {obj.content}</p>")
+
+
+def product_api_detail_view(request, pk, *arg, **kwargs):
+    try:
+        obj = Product.objects.get(pk=pk)
+    except Product.DoesNotExist:
+        return JsonResponse({"message": "Not found"})
+    return JsonResponse({"id": obj.id, "title": obj.title, "content": obj.content})
+
+```
+
+Add the view in the dj_bootcamp/urls.py
+
+```python
+from django.contrib import admin
+from django.urls import path
+from products.views import (
+    home_view,
+    product_detail_view,
+    product_api_detail_view,
+)
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    # own
+    path("search/", home_view),
+    path("products/<int:pk>/", product_detail_view),  # dynamic url
+    path("api/products/<int:pk>/", product_api_detail_view),  # dynamic url
+]
+
+```
