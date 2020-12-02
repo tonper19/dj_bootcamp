@@ -19,6 +19,7 @@ from products.views import (
     home_view,
     product_detail_view,
     product_api_detail_view,
+    product_list_view,
 )
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -26,4 +27,5 @@ urlpatterns = [
     path("search/", home_view),
     path("products/<int:pk>/", product_detail_view),  # dynamic url
     path("api/products/<int:pk>/", product_api_detail_view),  # dynamic url
+    path("products/", product_list_view),  # dynamic url
 ]

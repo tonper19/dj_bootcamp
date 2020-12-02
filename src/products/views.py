@@ -5,7 +5,9 @@ from .models import Product
 
 
 def home_view(request, *args, **kwargs):
-    return HttpResponse("<h1>Hello World</h1>")
+    # return HttpResponse("<h1>Hello World</h1>")
+    context = {"name": "Tony"}
+    return render(request, "home.html", context)
 
 
 def product_detail_view(request, pk):
@@ -13,7 +15,10 @@ def product_detail_view(request, pk):
         obj = Product.objects.get(pk=pk)
     except Product.DoesNotExist:
         raise Http404
-    return HttpResponse(f"<h1>Product: {obj.id}</h1><p>title: {obj.title}</p><p>content: {obj.content}</p>")
+    # print(dir(request))
+    # return HttpResponse(f"<h1>Product: {obj.id}</h1><p>title: {obj.title}</p><p>content: {obj.content}</p>")
+    context = {"object": obj}
+    return render(request, "products/product_detail.html", context)
 
 
 def product_api_detail_view(request, pk, *arg, **kwargs):
@@ -22,3 +27,9 @@ def product_api_detail_view(request, pk, *arg, **kwargs):
     except Product.DoesNotExist:
         return JsonResponse({"message": "Not found"})
     return JsonResponse({"id": obj.id, "title": obj.title, "content": obj.content})
+
+
+def product_list_view(request, *args, **kwargs):
+    qs = Product.objects.all()
+    context = {"object_list": qs}
+    return render(request, "products/product_list.html", context)

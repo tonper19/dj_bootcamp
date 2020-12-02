@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>{{object.title}}</h1>
+<p>Path: {{ request.path }}</p> 
+<p>is_secure: {{ request.is_secure }}</p>
+{% include "detail_snippet.html" with object=object %}
+{% endblock %}
