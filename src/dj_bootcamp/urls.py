@@ -23,6 +23,9 @@ from products.views import (
     product_list_view,
     # bad_view,
 )
+# awod
+from homepage.views import HomepageView
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     # own
@@ -32,4 +35,6 @@ urlpatterns = [
     path("api/products/<int:pk>/", product_api_detail_view),  # dynamic url
     path("products/", product_list_view),  # dynamic url
     # path("bad-view-dont-use/", bad_view),
+    # awod
+    path("", HomepageView.as_view(), name="home"),
 ]
