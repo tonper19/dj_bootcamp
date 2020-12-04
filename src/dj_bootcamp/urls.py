@@ -23,12 +23,21 @@ from products.views import (
     product_list_view,
     # bad_view,
 )
+from accounts.views import (
+    login_view,
+    logout_view,
+    register_view,
+)
 # awod
 from homepage.views import HomepageView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     # own
+    path("login/", login_view),
+    path("logout/", logout_view),
+    path("register/", register_view),
+
     path("search/", search_view),
     path("products/create/", product_create_view),
     path("products/<int:pk>/", product_detail_view),  # dynamic url
