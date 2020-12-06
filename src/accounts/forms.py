@@ -43,6 +43,12 @@ class RegisterForm(forms.Form):
                 "This is an invalid email, pick another one")
         return email
 
+    def clean_password(self, *args, **kwargs):
+        password = self.cleaned_data.get("password")
+        if self.password1 != self.password2:
+            raise forms.ValidationError("Passwords do not match")
+        return password
+
 
 class LoginForm(forms.Form):
     username = forms.CharField()
