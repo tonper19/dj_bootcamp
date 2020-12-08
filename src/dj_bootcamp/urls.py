@@ -28,6 +28,9 @@ from accounts.views import (
     logout_view,
     register_view,
 )
+from orders.views import (
+    order_checkout_view,
+)
 # awod
 from homepage.views import HomepageView
 
@@ -43,6 +46,9 @@ urlpatterns = [
     path("products/<int:pk>/", product_detail_view),  # dynamic url
     path("api/products/<int:pk>/", product_api_detail_view),  # dynamic url
     path("products/", product_list_view),  # dynamic url
+
+    path("checkout/", order_checkout_view),  # dynamic url
+
     # path("bad-view-dont-use/", bad_view),
     # awod
     path("", HomepageView.as_view(), name="home"),
