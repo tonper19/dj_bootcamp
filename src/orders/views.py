@@ -12,6 +12,8 @@ def order_checkout_view(request):
     if not qs.exists():
         return redirect("/")
     product = qs.first()
+    if not product.has_inventory():
+        return redirect("/no-inventory")
     user = request.user
     order_id = request.session.get("order_id")
     order_obj = None

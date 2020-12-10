@@ -43,6 +43,7 @@ class Order(models.Model):
     shipping_address = models.TextField(blank=True, null=True)
     billing_address = models.TextField(blank=True, null=True)
     timestamp = models.DateTimeField(auto_now_add=True)
+    inventory_updated = models.BooleanField(default=False)
 
     def mark_paid(self, custom_amount=None, save=False):
         paid_amount = self.total
@@ -50,6 +51,10 @@ class Order(models.Model):
             paid_amount = custom_amount
         self.paid = paid_amount
         self.status = 'paid'
+        if not self.inventory_updated and self.product:
+            product = self.product
+            product.decrease_inventory(count=1, save=True)
+            self.inventory_updated = True
         if save:
             self.save()
         return self.paid
